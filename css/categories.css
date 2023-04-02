@@ -36,8 +36,15 @@
     justify-content: center;
 
     cursor: pointer;
-
     transform: rotate(180deg);
+}
+
+.invisible {
+    display: none;
+}
+
+.rotate {
+    transform: rotate(0deg);
 }
 
 .categorie-title {
