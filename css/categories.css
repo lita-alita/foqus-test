@@ -12,6 +12,11 @@
     border: 1px solid #DFE4EF;
 }
 
+.subcategories {
+    width: 1174px;
+    margin-left: 16px;
+}
+
 .categorie-left-side {
     display: flex;
     align-items: center;
@@ -30,14 +35,24 @@
     align-items: center;
     justify-content: center;
 
-    cursor: pointer
+    cursor: pointer;
+
+    transform: rotate(180deg);
 }
 
 .categorie-title {
-    font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
+    line-height: 108%;
+
+    color: #000000;
+}
+
+.noncategorie-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
     line-height: 108%;
 
     color: #000000;
@@ -71,6 +86,18 @@
 
 .orange {
     background: #FF8D23;
+}
+
+.blue {
+    background: #0066FF;
+}
+
+.light-blue {
+    background: #00C2FF;
+}
+
+.gray {
+    background: #8E9CBB;
 }
 
 .choosed { 

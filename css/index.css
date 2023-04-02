@@ -108,3 +108,7 @@ input:focus, textarea:focus, select:focus{
 
     color: #000000;
 }
+
+.categories {
+    margin-top: 16px;
+}
