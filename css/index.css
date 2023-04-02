@@ -1,0 +1,110 @@
+body {
+    background: #FFFFFF;
+    font-family: 'Fira Sans';
+
+}
+
+.container {
+    width: 1860px;
+    padding: 38px 31px;
+}
+
+header {
+    width: 1800px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 108%;
+
+    color: #000000;
+}
+
+.header-right-side {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    gap: 10px
+}
+
+.elipse {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    background: #FFFFFF;
+    border: 1px solid #D3D8DF;
+    border-radius: 50px;
+}
+
+.elipse-text {
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    background: #FFFFFF;
+    border: 1px solid #D3D8DF;
+    border-radius: 50px;
+    
+    gap: 10px;
+    padding: 0 14px;
+}
+
+
+input {
+    -webkit-appearance: none;
+    border: none;
+    box-shadow: none !important;
+}
+
+:-webkit-autofill {
+    color: #fff !important;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+.search {
+    width: 564px;
+    height: 30px;
+    margin-top: 29px;
+
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 15px;
+
+    border-bottom: 1px solid #BFC9E0;
+}
+
+.search:focus {
+    border-bottom: 1px solid #0066FF;
+}
+
+.search-text {
+    width: 90%;
+
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 108%;
+
+    color: #000000;
+}
