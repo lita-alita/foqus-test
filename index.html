@@ -65,8 +65,12 @@
 
 
             <!--categories-->
-            <div class="categories" data-bind="foreach: categ">
-                <div id="categ-req-for-eachother">
+            <div class="categories"
+                data-bind="foreach: categ"
+                id="dropzone">
+                <div id="categ-req-for-eachother" class="_categorie"
+                    data-bind="event: {dragover: dragBehavior}"
+                    draggable="true">
                     <div class="categories-container">
                         <div class="categorie-left-side">
                             <div id="categ-req-for-eachother-pointer" data-bind="event: {click: openOrClose}" class="pointer">
@@ -157,6 +161,7 @@
 
         <script type="text/javascript" src="knockout/knockout.js"></script>
         <script type="text/javascript" src="js/data.js"></script>
+        <script type="text/javascript" src="js/categories.js"></script>
         <script type="text/javascript">
 
             class CategoriesCreating {
@@ -172,48 +177,32 @@
                         event.target.classList.toggle("rotate");
                         self.switchVisibility(!self.switchVisibility())
                     };
+
+                    self.start = start
+                    self.over = over
                 }
             }
 
             class CategoriesViewModel {
                 constructor() {
                     var self = this;
+                    
+                    self.findIt = findIt
+
+                    self.clear = clear
 
                     // Non-editable catalog data - would come from the server
                     self.categories = categories;
 
                     self.uncategories = uncategories;
 
+                    self.dragBehavior = dragBehavior
+
                     // Editable data
                     self.categ = ko.observableArray(
                         self.categories.map((cat) => new CategoriesCreating(cat))
                     );
-
-                    self.findIt = function(data, event) {
-                        let search = event.target.value
-                        self.clear(data)
-                        document.getElementById("searchInput").value = search
-                        
-                        if (search) {
-                            document.getElementById("close-image").classList.remove("invisible")
-                            document.getElementById("search").classList.add("searchFocus")
-                        } else {
-                            document.getElementById("search").classList.remove("searchFocus")
-                            document.getElementById("close-image").classList.add("invisible")
-                        }
-                        data.categ.remove(function(cat) {
-                                let remove = cat.title.includes(search) || cat.description?.includes(search)
-                                return !remove
-                        })
-                    }
-
-                    self.clear = function(data) {
-                        document.getElementById("searchInput").value = ""
-                        data.categ.removeAll()
-                        data.categories.map((cat) => data.categ.push(new CategoriesCreating(cat)))
-                    }
-
-                    }
+                }
             }
 
             ko.applyBindings(new CategoriesViewModel());

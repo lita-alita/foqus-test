@@ -112,3 +112,7 @@ input:focus, textarea:focus, select:focus{
 .categories {
     margin-top: 16px;
 }
+
+.underline {
+    border-bottom: #0066FF solid 2px;
+}
