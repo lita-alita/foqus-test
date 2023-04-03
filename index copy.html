@@ -45,11 +45,22 @@
 
         <main>
             <!--search-->
-            <div class="search"  tabindex="0">
+            <div class="search"  tabindex="0" id="search">
                 <img src="assets/loupe.svg" alt="" />
-                <input class="search-text" placeholder="Поиск">
+                <input
+                    class="search-text"
+                    placeholder="Поиск"
+                    data-bind="event: { input: findIt }"
+                    id="searchInput">
                 </input>
-                <img id="close-image" src="assets/close.svg" alt="" />
+
+                <img 
+                    id="close-image" 
+                    src="assets/close.svg"
+                    alt=""
+                    data-bind="event: { click: clear }"
+                    class="invisible"
+                    style="cursor: pointer"/>
             </div>
 
 
@@ -155,8 +166,6 @@
                     self.description = description;
                     self.isSubcategoriesExist = subcategories[0] !==  undefined ? true : false;
                     self.subcategories = ko.observableArray(subcategories);
-
-                    console.log(self)
                 }
             }
 
@@ -170,12 +179,35 @@
                     self.uncategories = uncategories;
 
                     // Editable data
-                    self.categ = ko.observableArray([
-                        new CategoriesCreating(self.categories[0]),
-                        new CategoriesCreating(self.categories[1]),
-                        new CategoriesCreating(self.categories[2]),
-                    ]);;
-                }
+                    self.categ = ko.observableArray(
+                        self.categories.map((cat) => new CategoriesCreating(cat))
+                    );
+
+                    self.findIt = function(data, event) {
+                        let search = event.target.value
+                        self.clear(data)
+                        document.getElementById("searchInput").value = search
+                        
+                        if (search) {
+                            document.getElementById("close-image").classList.remove("invisible")
+                            document.getElementById("search").classList.add("searchFocus")
+                        } else {
+                            document.getElementById("search").classList.remove("searchFocus")
+                            document.getElementById("close-image").classList.add("invisible")
+                        }
+                        data.categ.remove(function(cat) {
+                                let remove = cat.title.includes(search) || cat.description?.includes(search)
+                                return !remove
+                        })
+                    }
+
+                    self.clear = function(data) {
+                        document.getElementById("searchInput").value = ""
+                        data.categ.removeAll()
+                        data.categories.map((cat) => data.categ.push(new CategoriesCreating(cat)))
+                    }
+
+                    }
             }
 
             ko.applyBindings(new CategoriesViewModel());
