@@ -4,6 +4,7 @@ const subCategories = document.getElementById("categ-req-for-eachother-subcatego
 function pointerHandler () {
    pointer.classList.toggle("rotate") 
    subCategories.classList.toggle("invisible")
+   console.log("point")
 }
 
 pointer.addEventListener("click", pointerHandler)

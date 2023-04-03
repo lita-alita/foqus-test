@@ -45,36 +45,43 @@
 
         <main>
             <!--search-->
-            <div class="search"  tabindex="0">
+            <div class="search"  tabindex="0" id="search">
                 <img src="assets/loupe.svg" alt="" />
-                <input class="search-text" placeholder="Поиск">
+                <input
+                    class="search-text"
+                    placeholder="Поиск"
+                    data-bind="event: { input: findIt }"
+                    id="searchInput">
                 </input>
-                <img id="close-image" src="assets/close.svg" alt="" />
+
+                <img 
+                    id="close-image" 
+                    src="assets/close.svg"
+                    alt=""
+                    data-bind="event: { click: clear }"
+                    class="invisible"
+                    style="cursor: pointer"/>
             </div>
 
 
             <!--categories-->
-            <div class="categories">
+            <div class="categories" data-bind="foreach: categ">
                 <div id="categ-req-for-eachother">
                     <div class="categories-container">
                         <div class="categorie-left-side">
-                            <div id="categ-req-for-eachother-pointer" class="pointer">
+                            <div id="categ-req-for-eachother-pointer" data-bind="event: {click: openOrClose}" class="pointer">
                                 <img src="assets/pointer.svg" alt="" />
                             </div>
                 
-                            <p class="categorie-title">
-                                Обязательные для всех
-                            </p>
+                            <p class="categorie-title" data-bind="text: title"></p>
                 
-                            <div class="color">
+                            <div class="color" data-bind="if: markers">
                                 <div class="circle magenta"></div>
                                 <div class="circle yellow"></div>
                                 <div class="circle orange"></div>
                             </div>
                 
-                            <p class="categorie-description">
-                                Документы, обязательные для всех сотрудников без исключения
-                            </p>
+                            <p class="categorie-description" data-bind="text: description"></p>
                         </div>
                 
                         <div class="categorie-right-side">
@@ -84,44 +91,23 @@
                         </div>
                     </div>
                     
-                    <div class="subcategories-list invisible" id="categ-req-for-eachother-subcategories-list">
+                    <!-- ko if: isSubcategoriesExist === true -->
+                    <div class="subcategories-list" id="categ-req-for-eachother-subcategories-list"
+                        data-bind="visible: switchVisibility, foreach: subcategories"> 
                         <div class="categories-container subcategories">
                             <div class="categorie-left-side">                 
-                                <p class="noncategorie-title">
-                                    Паспорт
+                                <p class="noncategorie-title" data-bind="text: subtitle">
                                 </p>
-                    
+
+                                <!-- ko if: submarkers === true -->
                                 <div class="circle light-blue"></div>
+                                <!-- /ko -->
 
-                                <p class="categorie-description" style="color: #FF238D">
+                                <p class="categorie-description" style="color: #FF238D" data-bind="if: required">
                                     Обязательный
                                 </p>
                     
-                                <p class="categorie-description">
-                                    Для всех
-                                </p>
-                            </div>
-                    
-                            <div class="categorie-right-side">
-                                <img src="assets/pen.svg" alt="" />
-                                <img src="assets/delete.svg" alt="" />
-                                <img src="assets/move.svg" alt="" />
-                            </div>
-                        </div>
-
-                        <div class="categories-container subcategories">
-                            <div class="categorie-left-side">                 
-                                <p class="noncategorie-title">
-                                    ИНН
-                                </p>
-
-                                <p class="categorie-description" style="color: #FF238D">
-                                    Обязательный
-                                </p>
-                    
-                                <p class="categorie-description">
-                                    Для всех
-                                </p>
+                                <p class="categorie-description" data-bind="text: forWho"></p>
                             </div>
                     
                             <div class="categorie-right-side">
@@ -131,94 +117,29 @@
                             </div>
                         </div>
                     </div>
-                
-                  <script src="js/categories.js"></script>
-                </div>
-
-                <div id="categ-req-for-employment">
-                    <div class="categories-container">
-                        <div class="categorie-left-side">
-                            <div class="pointer">
-                                <img src="assets/pointer.svg" alt="" />
-                            </div>
-                
-                            <p class="categorie-title">
-                                Обязательные для трудоустройства
-                            </p>
-                
-                            <p class="categorie-description">
-                                Документы, без которых невозможно трудоустройство человека на какую бы то ни было должность в компании вне зависимости от граж
-                            </p>
-                        </div>
-                
-                        <div class="categorie-right-side">
-                            <img src="assets/pen.svg" alt="" />
-                            <img src="assets/delete.svg" alt="" />
-                            <img src="assets/move.svg" alt="" />
-                        </div>
-                    </div>
-                    
-                    <div class="subcategories-list"></div>
-                </div>
-
-                <div id="categ-special">
-                    <div class="categories-container">
-                        <div class="categorie-left-side">
-                            <div class="pointer">
-                                <img src="assets/pointer.svg" alt="" />
-                            </div>
-                
-                            <p class="categorie-title">
-                                Специальные
-                            </p>
-                        </div>
-                
-                        <div class="categorie-right-side">
-                            <img src="assets/pen.svg" alt="" />
-                            <img src="assets/delete.svg" alt="" />
-                            <img src="assets/move.svg" alt="" />
-                        </div>
-                    </div>
-                    
-                    <div class="subcategories-list"></div>
+                    <!-- /ko -->
                 </div>
             </div>
 
             <!--aside categories-->
             <div class="categories">
                 <div id="test-task">
-                    <div class="categories-container">
-                        <div class="categorie-left-side">
-                
-                            <p class="noncategorie-title">
-                                Тестовое задание кандидата
-                            </p>
 
-                            <p class="categorie-description">
-                                Россия, Белоруссия, Украина, администратор филиала, повар-сушист, повар-пиццмейкер, повар горячего цеха
-                            </p>
-                        </div>
-                
-                        <div class="categorie-right-side">
-                            <img src="assets/pen.svg" alt="" />
-                            <img src="assets/delete.svg" alt="" />
-                            <img src="assets/move.svg" alt="" />
-                        </div>
-                    </div>
-                </div>
+                <!-- ko foreach: uncategories -->
 
                 <div id="test-task">
                     <div class="categories-container">
                         <div class="categorie-left-side">
                 
-                            <p class="noncategorie-title">
-                                Трудовой договор
-                            </p>
+                            <p class="noncategorie-title" data-bind="text: title"> </p>
 
-                            <div class="color">
+                            <div class="color" data-bind="if: markers === true">
                                 <div class="circle blue"></div>
                                 <div class="circle gray"></div>
                             </div>
+
+                            <p class="categorie-description" data-bind="text: description"> </p>
+
                         </div>
                 
                         <div class="categorie-right-side">
@@ -228,29 +149,77 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="med-records">
-                    <div class="categories-container">
-                        <div class="categorie-left-side">
-                            <p class="noncategorie-title">
-                                Мед. книжка
-                            </p>
-                        </div>
-                
-                        <div class="categorie-right-side">
-                            <img src="assets/pen.svg" alt="" />
-                            <img src="assets/delete.svg" alt="" />
-                            <img src="assets/move.svg" alt="" />
-                        </div>
-                    </div>
-                </div>
-
+                <!-- /ko -->
             </div>
 
 
         </main>
 
+        <script type="text/javascript" src="knockout/knockout.js"></script>
+        <script type="text/javascript" src="js/data.js"></script>
+        <script type="text/javascript">
+
+            class CategoriesCreating {
+                constructor({ title, markers, description, subcategories }) {
+                    var self = this;
+                    self.title = title;
+                    self.markers = markers;
+                    self.description = description;
+                    self.switchVisibility = ko.observable(false);
+                    self.isSubcategoriesExist = subcategories[0] !==  undefined ? true : false;
+                    self.subcategories = ko.observableArray(subcategories);
+                    self.openOrClose = function (data, event) {
+                        event.target.classList.toggle("rotate");
+                        self.switchVisibility(!self.switchVisibility())
+                    };
+                }
+            }
+
+            class CategoriesViewModel {
+                constructor() {
+                    var self = this;
+
+                    // Non-editable catalog data - would come from the server
+                    self.categories = categories;
+
+                    self.uncategories = uncategories;
+
+                    // Editable data
+                    self.categ = ko.observableArray(
+                        self.categories.map((cat) => new CategoriesCreating(cat))
+                    );
+
+                    self.findIt = function(data, event) {
+                        let search = event.target.value
+                        self.clear(data)
+                        document.getElementById("searchInput").value = search
+                        
+                        if (search) {
+                            document.getElementById("close-image").classList.remove("invisible")
+                            document.getElementById("search").classList.add("searchFocus")
+                        } else {
+                            document.getElementById("search").classList.remove("searchFocus")
+                            document.getElementById("close-image").classList.add("invisible")
+                        }
+                        data.categ.remove(function(cat) {
+                                let remove = cat.title.includes(search) || cat.description?.includes(search)
+                                return !remove
+                        })
+                    }
+
+                    self.clear = function(data) {
+                        document.getElementById("searchInput").value = ""
+                        data.categ.removeAll()
+                        data.categories.map((cat) => data.categ.push(new CategoriesCreating(cat)))
+                    }
+
+                    }
+            }
+
+            ko.applyBindings(new CategoriesViewModel());
+        
+        </script>
+        
     </div>
-  <script src="js/index.js"></script>
 </body>
 </html>
